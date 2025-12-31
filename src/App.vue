@@ -7,6 +7,7 @@
         <input type="text" v-model="username" placeholder="Enter username" />
         <div class="spacer"></div>
         <Legend :ratings="ratings" @updateRatings="updateRatings($event)" />
+        <ImportButton @fileSelected="importFromFile($event)" />
         <ExportButton :loading="uploading" @click="exportImage()" />
         <DownloadButton @click="downloadImage()" />
         <div class="dropdown-container">
@@ -61,6 +62,7 @@ import { Rating } from "./types/ratings";
 import { generateKinklistImage } from "./util/generateImage";
 import { uploadImageToImgur } from "./util/uploadToImgur";
 import { importDataFromImgur } from "./util/importFromImgur";
+import { importDataFromImage } from "./util/importFromImage";
 
 import { showDialog } from './components/Dialogs/dialog';
 
@@ -71,6 +73,7 @@ import ErrorDialog from "./components/Dialogs/ErrorDialog.vue";
 import AboutDialog from "./components/Dialogs/AboutDialog.vue";
 import EditCategoryDialog from "./components/Dialogs/EditCategoryDialog.vue";
 import ExportButton from "./components/ExportButton.vue";
+import ImportButton from "./components/ImportButton.vue";
 import DownloadButton from "./components/DownloadButton.vue";
 import Importing from "./components/Importing.vue";
 import Legend from "./components/Legend.vue";
@@ -82,6 +85,7 @@ import { IMGUR_CLIENT_ID } from "./constants";
   components: {
     Category,
     ExportButton,
+    ImportButton,
     DownloadButton,
     Importing,
     Legend,
@@ -148,6 +152,22 @@ export default class App extends Vue {
   public downloadImage(): void {
     const canvas = generateKinklistImage(this.categories, this.ratings, this.username, this.encodeData);
     downloadImage(canvas);
+  }
+
+  public async importFromFile(file: File): Promise<void> {
+    try {
+      this.importing = true;
+      const { categories, ratings, username } = await importDataFromImage(file);
+      this.username = username;
+      this.categories = categories;
+      this.ratings = ratings;
+      this.importing = false;
+    } catch (ex) {
+      showDialog(ErrorDialog, { message: "Could not read kinklist data from image - ensure it was exported with 'Encode data' enabled" });
+      console.error("Something went wrong loading/parsing kinklist from file");
+      console.error(ex);
+      this.importing = false;
+    }
   }
 
   public async exportImage(): Promise<void> {

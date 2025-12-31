@@ -1,6 +1,6 @@
 <template>
   <main>
-    <p>Importing data from Imgur</p>
+    <p>Importing data...</p>
     <span class="loading-indicator"></span>
   </main>
 </template>
