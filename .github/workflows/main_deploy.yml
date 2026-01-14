@@ -3,23 +3,29 @@ on:
   push:
     branches:
       - main
+
+permissions:
+  actions: read
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [24]
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v6
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
     - name: Install Packages
       run: yarn install --frozen-lockfile
     - name: Deploy to GH Pages
       run: |
-        git config --global user.email ${{secrets.EMAIL}}
-        git config --global user.name "Lord-Kamina"
-        git remote set-url origin https://${{secrets.TOKEN}}@github.com/Lord-Kamina/kinklist-v2.git
+        # git config --global user.email ${{ github.repository_owner_id }}+${{ github.repository_owner }}@users.noreply.github.com
+        git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com 
+        git config --global user.name ${{ github.repository_owner }}
+        git remote set-url origin https://git:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
         npm run deploy
