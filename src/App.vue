@@ -79,7 +79,6 @@ import Importing from "./components/Importing.vue";
 import Legend from "./components/Legend.vue";
 import { generateId } from "./util/idGenerator";
 import { downloadImage } from "./util/downloadImage";
-import { FREEHOST_API_KEY } from "./constants";
 
 @Component({
   components: {
@@ -96,7 +95,6 @@ export default class App extends Vue {
   categories: InKinkCategory[] = [];
   username = "";
   uploadId = "";
-  clientId = FREEHOST_API_KEY;
   uploading = false;
   importing = false;
   showOptions = false;
@@ -174,7 +172,7 @@ export default class App extends Vue {
     try {
       this.uploading = true;
       const canvas = generateKinklistImage(this.categories, this.ratings, this.username, this.encodeData);
-      const id = await uploadImageToFreeImageHost(canvas, this.clientId);
+      const id = await uploadImageToFreeImageHost(canvas);
       const hasAnyComment = this.categories.some((c) => c.kinks.some((k) => k.comment));
       showDialog(UploadResultDialog, { uploadId: id, hasEncodedData: this.encodeData && hasAnyComment });
     } catch (ex) {

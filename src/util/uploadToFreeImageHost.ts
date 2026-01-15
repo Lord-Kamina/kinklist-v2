@@ -1,18 +1,23 @@
-export const uploadImageToFreeImageHost = async (canvas: HTMLCanvasElement, clientId: string): Promise<string> => {
-    const formdata = new FormData();
-    formdata.append('source', canvas.toDataURL().split(',')[1]);
-    formdata.append('action', 'upload');
-    formdata.append('format', 'txt');
-    formdata.append('key', clientId);
-    const response = await fetch(`https://freeimage.host/api/1/upload`, {
+import { VERCEL_URL } from "@/constants";
+
+export const uploadImageToFreeImageHost = async (canvas: HTMLCanvasElement): Promise<string> => {
+    const blob = await new Promise<Blob | null>((resolve) => 
+        canvas.toBlob(resolve, 'image/png')
+    );
+    if (!blob) throw new Error('Failed to convert canvas to blob');
+    const response = await fetch(`${VERCEL_URL}/api/upload`, {
         method: 'POST',
-        body: formdata
+        headers: {
+            'Content-Type': 'application/octet-stream', 
+        },
+        body: blob, 
     });
+
     const json = await response.json();
-    if (!response.ok) {
-        if (json.data.error) throw json.data.error;
-        console.error({ response, json });
-        throw new Error('FreeImageHost response: Not OK');
+
+    if (!response.ok || json.status_code !== 200) {
+        throw new Error(json.error?.message || 'Upload failed');
     }
-    return json.data.id;
-}
+
+    return json.image.id_encoded;
+};

@@ -1,4 +1,4 @@
-import { FREEHOST_API_KEY } from "./src/constants";
+const FREEHOST_API_KEY = '6d207e02198a847aa98d0a2a901485a5';
 
 export const config = {
     api: {
@@ -9,10 +9,17 @@ export const config = {
 export default async function handler(req, res) {
     res.setHeader('Access-Control-Allow-Origin', '*'); 
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
+if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
 
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return res.status(405).json({ error: `Method ${req.method} not allowed` });
     }
 
     try {

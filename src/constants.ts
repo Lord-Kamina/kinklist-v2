@@ -1,1 +1,1 @@
-export const FREEHOST_API_KEY = '6d207e02198a847aa98d0a2a901485a5';
+export const VERCEL_URL = 'https://kinklist-v2.vercel.app';
