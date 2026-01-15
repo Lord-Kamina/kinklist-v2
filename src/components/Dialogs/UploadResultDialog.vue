@@ -4,11 +4,11 @@
     @close="close()"
   >
     <div class="upload-dialog-content">
-      <h3>Imgur link</h3>
+      <h3>FreeImageHost link</h3>
       <div class="row">
-        <input ref="imgurUrlRef" readonly :value="uploadUrl" />
-        <button class="clipboard hide-text" title="Copy to clipboard" @click="copyUploadUrlToClipboard('imgurUrlRef', uploadUrl)">Copy to clipboard</button>
-        <a :href="uploadUrl" target="_blank" class="hide-text">Goto Imgur</a>
+        <input ref="freeImageHostUrlRef" readonly :value="uploadUrl" />
+        <button class="clipboard hide-text" title="Copy to clipboard" @click="copyUploadUrlToClipboard('freeImageHostUrlRef', uploadUrl)">Copy to clipboard</button>
+        <a :href="uploadUrl" target="_blank" class="hide-text">Goto FreeImageHost</a>
       </div>
       <h3>Kinklist link</h3>
       <div class="row">
@@ -46,7 +46,7 @@ export default class UploadResultDialog extends Vue {
   toastTimeout = 0;
 
   public get uploadUrl(): string {
-    return this.uploadId ? `https://i.imgur.com/${this.uploadId}.png` : '';
+    return this.uploadId ? `https://iili.io/${this.uploadId}.png` : '';
   }
 
   public get viewUrl(): string {

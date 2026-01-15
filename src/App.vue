@@ -26,7 +26,7 @@
                 </div>
                 <button class="about-btn" @click="showAbout()">About</button>
                 <div class="client-id">
-                  <label for="clientid">IMGUR Client ID</label>
+                  <label for="clientid">FreeHost Client ID</label>
                   <input type="text" name="clientid" v-model="clientId" />
                 </div>
               </div>
@@ -60,8 +60,8 @@ import { InKink, InKinkCategory } from "./types/kinks";
 import { getDefaultKinkContent, getDefaultRatings } from "./data/default";
 import { Rating } from "./types/ratings";
 import { generateKinklistImage } from "./util/generateImage";
-import { uploadImageToImgur } from "./util/uploadToImgur";
-import { importDataFromImgur } from "./util/importFromImgur";
+import { uploadImageToFreeImageHost } from "./util/uploadToFreeImageHost";
+import { importDataFromFreeImageHost } from "./util/importFromFreeImageHost";
 import { importDataFromImage } from "./util/importFromImage";
 
 import { showDialog } from './components/Dialogs/dialog';
@@ -79,7 +79,7 @@ import Importing from "./components/Importing.vue";
 import Legend from "./components/Legend.vue";
 import { generateId } from "./util/idGenerator";
 import { downloadImage } from "./util/downloadImage";
-import { IMGUR_CLIENT_ID } from "./constants";
+import { FREEHOST_API_KEY } from "./constants";
 
 @Component({
   components: {
@@ -96,7 +96,7 @@ export default class App extends Vue {
   categories: InKinkCategory[] = [];
   username = "";
   uploadId = "";
-  clientId = IMGUR_CLIENT_ID;
+  clientId = FREEHOST_API_KEY;
   uploading = false;
   importing = false;
   showOptions = false;
@@ -105,7 +105,7 @@ export default class App extends Vue {
   numColumns = 4;
 
   public get uploadUrl(): string {
-    return this.uploadId ? `https://i.imgur.com/${this.uploadId}.png` : '';
+    return this.uploadId ? `https://iili.io/${this.uploadId}.png` : '';
   }
 
   public get columns(): InKinkCategory[][] {
@@ -135,7 +135,7 @@ export default class App extends Vue {
   }
 
   public async created(): Promise<void> {
-    if (!(await this.tryLoadImgurData())) {
+    if (!(await this.tryLoadFreeImageHostData())) {
       this.loadDefaults();
     }
     this.updateNumColumns();
@@ -174,7 +174,7 @@ export default class App extends Vue {
     try {
       this.uploading = true;
       const canvas = generateKinklistImage(this.categories, this.ratings, this.username, this.encodeData);
-      const id = await uploadImageToImgur(canvas, this.clientId);
+      const id = await uploadImageToFreeImageHost(canvas, this.clientId);
       const hasAnyComment = this.categories.some((c) => c.kinks.some((k) => k.comment));
       showDialog(UploadResultDialog, { uploadId: id, hasEncodedData: this.encodeData && hasAnyComment });
     } catch (ex) {
@@ -261,16 +261,16 @@ export default class App extends Vue {
     }
   }
 
-  private async tryLoadImgurData(): Promise<boolean> {
+  private async tryLoadFreeImageHostData(): Promise<boolean> {
     // Get the hash
-    const id = this.getImgurHash();
+    const id = this.getFreeImageHostHash();
     // If there is no hash, no download happens
     if (!id) return false;
 
     try {
       // Download image
       this.importing = true;
-      const { categories, ratings, username } = await importDataFromImgur(id);
+      const { categories, ratings, username } = await importDataFromFreeImageHost(id);
       this.username = username
       this.categories = categories;
       this.ratings = ratings;
@@ -285,7 +285,7 @@ export default class App extends Vue {
     }
   }
 
-  private getImgurHash(): false | string {
+  private getFreeImageHostHash(): false | string {
     if (!location.hash) return false;
     if (location.hash.length <= 1) return false;
     if (!location.hash.match(/^#[a-zA-Z0-9]{3,10}$/)) return false;

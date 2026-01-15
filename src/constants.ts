@@ -1,1 +1,1 @@
-export const IMGUR_CLIENT_ID = '9db53e5936cd02f';
+export const FREEHOST_API_KEY = '6d207e02198a847aa98d0a2a901485a5';
