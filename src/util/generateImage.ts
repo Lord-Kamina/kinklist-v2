@@ -90,7 +90,8 @@ const createCanvas = (width: number, height: number): { canvas: HTMLCanvasElemen
 const addUsernameToCanvas = (context: CanvasRenderingContext2D, username: string): void => {
     context.font = "bold 48px Arial";
     context.fillStyle = getCSSprop('--text-color');
-    context.fillText(`Kinklist (v${APP_VERSION})` + username, 10, 50);
+    const date: string = new Date(Date.now()).toDateString();
+    context.fillText(`Kinklist (v${APP_VERSION}) ${username}, @ ${date}`, 10, 50);
 }
 
 const divideCategoryColumns = (categories: ExKinkCategory[]): { columns: ExKinkCategory[][], tallestColumnHeight: number } => {

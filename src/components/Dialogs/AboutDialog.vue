@@ -5,21 +5,13 @@
   >
     <div class="about-dialog-content">
       <p>
-        Kinklist was created by Goctionni to help people easily and quickly communicate their
+        Kinklist was created by <a href="https://www.reddit.com/user/Goctionni/">Goctionni</a> to help people easily and quickly communicate their
         preferences. It is open source under the MIT license. You are thus free modify source
         code in any way you wish. Credit is appreciated but not required.
       </p>
       <p>
-        If you have questions about kinklist, or suggestions, you can leave me a message on
-        Reddit (/u/Goctionni) or an issue on Github. I always enjoy hearing of people using
-        things I made, so if you're using Kinklist for your community- hearing about that is
-        also just lovely.
+        This version was modified by Lord-Kamina. If you have questions, suggestions or fixes, file an issue over at <a href="https://github.com/Lord-Kamina/kinklist-v2" target="_blank">Github</a>.
       </p>
-      <ul>
-        <li><a href="https://github.com/Goctionni/kinklist-v2" target="_blank">Github</a></li>
-        <li><a href="https://www.reddit.com/user/Goctionni/" target="_blank">reddit.com/u/Goctionni</a></li>
-        <li>Discord: Goctionni#9137</li>
-      </ul>
     </div>
   </Dialog>
 </template>
