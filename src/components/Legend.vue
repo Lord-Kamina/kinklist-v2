@@ -49,12 +49,13 @@ export default class Legend extends Vue {
 
 dl {
   display: flex;
-  gap: .5em;
+  gap: .3em;
   padding: .5em 0;
   margin: 0;
   border-radius: 4px;
 }
 dd {
+  font-size: .95cqw;
   margin-inline-start: 0;
   padding-top: 2px;
 }

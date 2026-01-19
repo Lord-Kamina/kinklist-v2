@@ -27,9 +27,11 @@ button {
   background-color: #246;
   color: #FFF;
   font-weight: bold;
-  font-size: 18px;
+  font-size: .95cqw;
+  padding: 0.125cqw;
   border: 0;
-  width: 150px;
+  width: 90px;
+  max-height:40px;
   border-radius: 4px;
   position: relative;
   overflow: hidden;

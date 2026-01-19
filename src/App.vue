@@ -499,7 +499,7 @@ header {
       height: 37px;
     }
     .dropdown-container {
-      height: 37px;
+      max-height: 37px;
     }
   }
 }
@@ -537,7 +537,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 40px;
   width: 37px;
 
   &::before {
