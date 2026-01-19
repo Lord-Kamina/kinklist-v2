@@ -10,6 +10,7 @@
         <ImportButton @fileSelected="importFromFile($event)" />
         <ExportButton :loading="uploading" @click="exportImage()" />
         <DownloadButton @click="downloadImage()" />
+        <ThemeSwitch />
         <div class="dropdown-container">
           <button class="dropdown-toggle hide-text" @click="toggleOptions(true)">Options</button>
           <transition name="fade">
@@ -17,8 +18,6 @@
               <div class="backdrop" @click="toggleOptions(false)"></div>
               <div class="options-dropdown-content">
                 <div class="option checkbox">
-                  <input type="checkbox" id="darkmode" v-model="darkMode">
-                  <label for="darkmode">Dark mode</label>
                 </div>
                 <div class="option checkbox">
                   <input type="checkbox" id="encodeData" v-model="encodeData">
@@ -55,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue } from "vue-property-decorator";
 import { InKink, InKinkCategory } from "./types/kinks";
 import { getDefaultKinkContent, getDefaultRatings } from "./data/default";
 import { Rating } from "./types/ratings";
@@ -77,6 +76,7 @@ import ImportButton from "./components/ImportButton.vue";
 import DownloadButton from "./components/DownloadButton.vue";
 import Importing from "./components/Importing.vue";
 import Legend from "./components/Legend.vue";
+import ThemeSwitch from "./components/ThemeSwitch.vue";
 import { generateId } from "./util/idGenerator";
 import { downloadImage } from "./util/downloadImage";
 
@@ -88,6 +88,7 @@ import { downloadImage } from "./util/downloadImage";
     DownloadButton,
     Importing,
     Legend,
+    ThemeSwitch
   },
 })
 export default class App extends Vue {
@@ -98,7 +99,8 @@ export default class App extends Vue {
   uploading = false;
   importing = false;
   showOptions = false;
-  darkMode = false;
+  currentTheme = "auto";
+  themes = ["auto", "light", "dark"];
   encodeData = true;
   numColumns = 4;
 
@@ -296,16 +298,31 @@ export default class App extends Vue {
     this.ratings = getDefaultRatings();
     this.categories = getDefaultKinkContent(this.ratings[0].name);
   }
-
-  @Watch('darkMode')
-  updateDarkMode(): void {
-    if (this.darkMode) document.body.classList.add('theme-dark');
-    else document.body.classList.remove('theme-dark');
-  }
 }
 </script>
 
 <style lang="scss">
+  @function --gen-pair(--base-color <color>) returns <color> {
+    result: light-dark(oklch(from var(--base-color) l c h / alpha), oklch(from var(--base-color) calc(1.1 - l) c calc(h + 180) / alpha));
+  }
+  @function --semantic-pair(--base-color <color>) returns <color> {
+    result: light-dark(oklch(from var(--base-color) l c h), oklch(from var(--base-color) calc(l - 0.1) calc(c + 0.04) h));
+  }
+:root {
+  color-scheme: light dark;
+  --background-color: --gen-pair(#DFE0E2);
+  --text-color: --gen-pair(#121212);
+  --border-color: --gen-pair(rgb(0 0 0 / 0.5));
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
 *,
 *::before,
 *::after {
@@ -313,15 +330,17 @@ export default class App extends Vue {
 }
 body,
 html {
+  color: var(--text-color);
   font-family: Arial;
   padding: 0;
   margin: 0;
   width: 100%;
   height: 100%;
-  background: #E2E2E8;
+  background: --gen-pair(#E2E2E8);
 }
 
 h1, h2, h3, h4, h5 {
+  color: var(--text-color);
   padding: 0;
   margin: 0;
 }
@@ -352,9 +371,9 @@ button {
   left: 50%;
   top: 100%;
   margin-top: 4px;
-  background-color: #333;
+  background-color: --gen-pair(#333);
   font-size: 1em;
-  color: #FFF;
+  color: --gen-pair(#DFE0E2);
   white-space: nowrap;
   padding: .25em .5em;
   border-radius: 4px;
@@ -455,10 +474,6 @@ button {
   }
 }
 
-body.theme-dark {
-  filter: invert(1) hue-rotate(180deg);
-}
-
 .fade-enter-active, .fade-leave-active {
   transition: opacity .35s;
 }
@@ -472,15 +487,15 @@ body.theme-dark {
   display: flex;
   flex-direction: column;
   gap: 1em;  
-  background: #E2E2E8;
+  background: --gen-pair(#E2E2E8);
 }
 
 header {
-  background-color: #EEE;
+  background-color: --gen-pair(#EEE);
   display: flex;
   padding: 10px;
   gap: 1em;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+  box-shadow: 0 1px 3px --gen-pair(rgb(0 0 0 / 12%)), 0 1px 2px --gen-pair(rgb(0 0 0 / 24%));
 }
 
 @media (min-width: 1200px) {
@@ -528,7 +543,7 @@ main {
 }
 
 .dropdown-toggle {
-  background-color: #246;
+  background-color: --gen-pair(#246);
   border: 0;
   border-radius: 4px;
   position: relative;
@@ -543,7 +558,7 @@ main {
   &::before {
     position: absolute;
     content: '';
-    border: solid #FFF 3px;
+    border: solid --gen-pair(#DFE0E2) 3px;
     border-top-color: transparent;
     border-left-color: transparent;
     width: 40%;
@@ -558,7 +573,7 @@ main {
 
 .backdrop {
   position: fixed;
-  background-color: #000;
+  background-color: var(--text-color);
   opacity: .2;
   top: 0;
   left: 0;
@@ -571,8 +586,8 @@ main {
   margin-top: 10px;
   right: 0;
   width: 200px;
-  background-color: #FFF;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  background-color: var(--background-color);
+  box-shadow: 0 1px 3px --gen-pair(rgba(0,0,0,0.12)), 0 1px 2px --gen-pair(rgba(0,0,0,0.24));
   padding: 10px;
   z-index: 2;
 }
@@ -603,7 +618,7 @@ main {
     &::before {
       width: 20px;
       height: 20px;
-      border: solid #000 2px;
+      border: solid --gen-pair(#121212) 2px;
       transition: background-color .2s ease-in-out;
     }
 
@@ -611,7 +626,7 @@ main {
       width: 0px;
       height: 0px;
       transition: height .2s ease-in, width .2s .2s ease-out;
-      border: solid #FFF 2px;
+      border: solid --gen-pair(#DFE0E2) 2px;
       border-top-color: transparent;
       border-right-color: transparent;
       transform-origin: top left;
@@ -621,7 +636,7 @@ main {
 
   input:checked + label {
     &::before {
-      background-color: #000;
+      background-color: var(--text-color);
     }
 
     &::after {
@@ -640,7 +655,7 @@ main {
 }
 
 input {
-  border: solid rgba(0, 0, 0, .25) 1px;
+  border: solid --gen-pair(rgba(0, 0, 0, .25)) 1px;
   border-radius: 5px;
   padding: 5px 10px;
   height: 35px;
@@ -650,13 +665,13 @@ input {
   position: fixed;
   bottom: 1em;
   right: 1em;
-  background-color: #246;
+  background-color: --gen-pair(#246);
   font-size: 1.5em;
   cursor: pointer;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  color: #FFF;
+  color: --gen-pair(#DFE0E2);
 
   &::before,
   &::after {
@@ -664,7 +679,7 @@ input {
   }
 
   &:hover {
-    background-color: #369;
+    background-color: --gen-pair(#369);
 
     &::before {
       transform: rotate(90deg);

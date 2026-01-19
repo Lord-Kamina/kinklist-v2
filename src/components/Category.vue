@@ -120,10 +120,10 @@ export default class Category extends Vue {
 
 <style scoped lang="scss">
 .kink-category {
-  background-color: #FFF;
+  background-color: --gen-pair(#DFE0E2);
   border-radius: 3px;
   padding: .5em;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+  box-shadow: 0 1px 3px --gen-pair(rgb(0 0 0 / 12%)), 0 1px 2px --gen-pair(rgb(0 0 0 / 24%));
 }
 
 header {
@@ -143,7 +143,7 @@ button {
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(0, 0, 0, .1);
+    background-color: --gen-pair(rgba(0, 0, 0, .1));
   }
 }
 
@@ -155,10 +155,10 @@ button {
 }
 
 .add-kink {
-  outline: solid rgba(0, 128, 0, .5) 1px;
+  outline: solid --gen-pair(rgba(0, 128, 0, .5)) 1px;
   outline-offset: -1px;
   filter: saturate(0);
-  color: #090;
+  color: --gen-pair(#090);
 
   &:hover {
     filter: saturate(1);
@@ -166,10 +166,10 @@ button {
 }
 
 .edit-category {
-  outline: solid rgba(0, 0, 228, .4) 1px;
+  outline: solid --gen-pair(rgba(0, 0, 228, .4)) 1px;
   outline-offset: -1px;
   filter: saturate(0);
-  color: #00C;
+  color: --gen-pair(#00C);
 
   &:hover {
     filter: saturate(1);
@@ -177,10 +177,10 @@ button {
 }
 
 .remove-category {
-  outline: solid rgba(228, 0, 0, .4) 1px;
+  outline: solid --gen-pair(rgba(228, 0, 0, .4)) 1px;
   outline-offset: -1px;
   filter: saturate(0);
-  color: #C00;
+  color: --gen-pair(#C00);
 
   &:hover {
     filter: saturate(1);

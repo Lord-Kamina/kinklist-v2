@@ -62,11 +62,16 @@ const tryReadImageData = (canvas: HTMLCanvasElement, context: CanvasRenderingCon
   for (let y = canvas.height - 1; y >= 0; y--) {
     for (let x = 0; x < canvas.width; x++) {
       const pixelData = context.getImageData(x, y, 1, 1).data;
-      if (
-        pixelData[0] === 255 &&
-        pixelData[1] === 255 &&
-        pixelData[2] === 255
-      ) {
+      if ((
+        pixelData[0] === 223 &&
+        pixelData[1] === 224 &&
+        pixelData[2] === 226) // Light theme
+        || (
+        pixelData[0] === 21 &&
+        pixelData[1] === 20 &&
+        pixelData[2] === 19)
+      ) // Dark theme
+      {
         return json;
       }
       const r = 254 - pixelData[0];

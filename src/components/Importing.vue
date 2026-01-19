@@ -37,7 +37,7 @@ p {
   width: var(--size);
   height: var(--size);
   border: solid transparent var(--borderSize);
-  border-top-color: #000;
+  border-top-color: --gen-pair(#121212);
   border-radius: 50%;
   animation: linear spin 1s infinite;
 }

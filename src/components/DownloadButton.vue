@@ -17,8 +17,8 @@ export default class DownloadButton extends Vue {
 
 <style lang="scss" scoped>
 button {
-  background-color: #246;
-  color: #FFF;
+  background-color: --gen-pair(#246);
+  color: --gen-pair(#DFE0E2);
   font-weight: bold;
   font-size: .95cqw;
   padding: 0.125cqw;

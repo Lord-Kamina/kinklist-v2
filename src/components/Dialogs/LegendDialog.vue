@@ -64,7 +64,7 @@ export default class RatingDialog extends Vue {
   }
 
   add(): void {
-    this.model.push({ name: '', color: '#000' });
+    this.model.push({ name: '', color: '--gen-pair(#121212)' });
   }
 
   close(): void {
@@ -96,12 +96,12 @@ export default class RatingDialog extends Vue {
   .icon-button {
     width: 25px;
     height: 25px;
-    outline: solid #060 1px;
+    outline: solid --gen-pair(#060) 1px;
     outline-offset: -1px;
-    color: #090;
+    color: --gen-pair(#090);
 
     &:hover {
-      background-color: #CFC;
+      background-color: --gen-pair(#CFC);
     }
   }
 }
@@ -135,18 +135,18 @@ input {
   padding: .12em .2em;
   width: 150px;
   height: 25px;
-  border: solid #666 1px;
+  border: solid --gen-pair(#666) 1px;
 }
 
 .remove-rating {
   width: 25px;
   height: 25px;
-  outline: solid #600 1px;
+  outline: solid --gen-pair(#600) 1px;
   outline-offset: -1px;
-  color: #900;
+  color: --gen-pair(#900);
 
   &:hover {
-    background-color: #FCC;
+    background-color: --gen-pair(#FCC);
   }
 }
 
@@ -159,21 +159,21 @@ input {
 
 .dialog-action {
   padding: .35em .7em;
-  background-color: #FFF;
-  border: solid rgba(0, 0, 0, .2) 1px;
+  background-color: --gen-pair(#DFE0E2);
+  border: solid --gen-pair(rgba(0, 0, 0, .2)) 1px;
   font-size: 16px;
 
   &:hover {
-    border: solid rgba(0, 0, 0, .4) 1px;
+    border: solid --gen-pair(rgba(0, 0, 0, .4)) 1px;
   }
 
   &.action-primary {
-    background-color: #246;
-    color: #FFF;
+    background-color: --gen-pair(#246);
+    color: --gen-pair(#DFE0E2);
     font-weight: bold;
 
     &:hover {
-      background-color: #369;
+      background-color: --gen-pair(#369);
     }
   }
 }

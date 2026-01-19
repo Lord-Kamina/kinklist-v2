@@ -67,6 +67,12 @@ const drawAllColumns = (context: CanvasRenderingContext2D, columns: ExKinkCatego
     }
 }
 
+function getCSSprop(cssVarName : string, fromElement? : Element) {
+  const element = fromElement || document.body;
+  return window.getComputedStyle(element)
+         .getPropertyValue(cssVarName);
+}
+
 const createCanvas = (width: number, height: number): { canvas: HTMLCanvasElement, context: CanvasRenderingContext2D } => {
     const canvas = document.createElement('canvas');
     canvas.width = width;
@@ -75,7 +81,7 @@ const createCanvas = (width: number, height: number): { canvas: HTMLCanvasElemen
     canvas.style.height = `${height}px`;
     
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-    context.fillStyle = '#FFFFFF';
+    context.fillStyle = getCSSprop('--background-color');
     context.fillRect(0, 0, canvas.width, canvas.height);
     
     return { context: context, canvas: canvas };
@@ -83,7 +89,7 @@ const createCanvas = (width: number, height: number): { canvas: HTMLCanvasElemen
 
 const addUsernameToCanvas = (context: CanvasRenderingContext2D, username: string): void => {
     context.font = "bold 48px Arial";
-    context.fillStyle = '#000000';
+    context.fillStyle = getCSSprop('--text-color');
     context.fillText(`Kinklist (v${APP_VERSION})` + username, 10, 50);
 }
 
@@ -118,7 +124,7 @@ const calculateCategoryHeight = (category: ExKinkCategory): number => {
 
 const drawCategory = (context: CanvasRenderingContext2D, x: number, y: number, category: ExKinkCategory, ratings: Rating[], includeComments: boolean): void => {
     // Draw title
-    context.fillStyle = '#000000';
+    context.fillStyle = getCSSprop('--text-color');
     context.font = 'bold 36px Arial';
     context.fillText(category.name, x, y + 10);
 
@@ -134,7 +140,7 @@ const drawCategory = (context: CanvasRenderingContext2D, x: number, y: number, c
         const kink = category.kinks[i];
         const rowY = y + (hasSubtitle ? config.titleWithSubcategoryHeight : config.titleWithoutSubcategoryHeight) + (i * config.categoryRowHeight)
         // Text
-        context.fillStyle = '#000000';
+        context.fillStyle = getCSSprop('--text-color');
         context.font = '24px Arial';
         context.fillText(
             kink.name,
@@ -150,9 +156,12 @@ const drawCategory = (context: CanvasRenderingContext2D, x: number, y: number, c
 
             context.beginPath();
             context.arc(cx, cy, 16, 0, 2 * Math.PI, false);
-            context.fillStyle = rating.color;
+            const domElement = document.querySelectorAll(
+                'dl .rating dt span')[ratings.indexOf(rating)];
+            const fillColor = getCSSprop('background-color', domElement);
+            context.fillStyle = fillColor;
             context.fill();
-            context.strokeStyle = `rgba(0, 0, 0, .5)`;
+            context.strokeStyle = getCSSprop('--border-color');
             context.lineWidth = 2;
             context.stroke();
         }
@@ -164,9 +173,9 @@ const drawCategory = (context: CanvasRenderingContext2D, x: number, y: number, c
             context.ellipse(commentXOffset, rowY - 20, 12, 10, 0, 0.4 * Math.PI, 0.1 * Math.PI, false);
             context.lineTo(commentXOffset, rowY - 4);
             context.lineTo(commentXOffset, rowY - 10);
-            context.fillStyle = '#FFF';
+            context.fillStyle = getCSSprop('--background-color');
             context.fill();
-            context.strokeStyle = `rgba(0, 0, 0, .5)`;
+            context.strokeStyle = getCSSprop('--border-color');
             context.lineWidth = 2;
             context.stroke();
             context.beginPath();
@@ -174,9 +183,9 @@ const drawCategory = (context: CanvasRenderingContext2D, x: number, y: number, c
             context.lineTo(commentXOffset + 1, rowY - 23);
             context.moveTo(commentXOffset - 3, rowY - 17);
             context.lineTo(commentXOffset + 3, rowY - 17);
-            context.fillStyle = '#FFF';
+            context.fillStyle = getCSSprop('--background-color');
             context.fill();
-            context.strokeStyle = `rgba(0, 0, 0, .5)`;
+            context.strokeStyle = getCSSprop('--border-color');
             context.lineWidth = 2;
             context.stroke();
         }
@@ -185,19 +194,22 @@ const drawCategory = (context: CanvasRenderingContext2D, x: number, y: number, c
 
 const drawLegend = (context: CanvasRenderingContext2D, ratings: Rating[], canvasWidth: number): void => {
     context.font = "bold 26px Arial";
-    context.fillStyle = '#000000';
+    context.fillStyle = getCSSprop('--text-color');
     
     let x = canvasWidth - config.legendOffset - (config.legendItemWidth * ratings.length);
     for (const rating of ratings) {
         context.beginPath();
         context.arc(x, 34, 16, 0, 2 * Math.PI, false);
-        context.fillStyle = rating.color;
+        const domElement = document.querySelectorAll(
+            'dl .rating dt span')[ratings.indexOf(rating)];
+        const fillColor = getCSSprop('background-color', domElement);
+        context.fillStyle = fillColor;
         context.fill();
-        context.strokeStyle = 'rgba(0, 0, 0, 0.5)'
+        context.strokeStyle = getCSSprop('--border-color');
         context.lineWidth = 2;
         context.stroke();
         
-        context.fillStyle = '#000000';
+        context.fillStyle = getCSSprop('--text-color');
         context.fillText(rating.name, x + 30, 44);
         x += config.legendItemWidth;
     }

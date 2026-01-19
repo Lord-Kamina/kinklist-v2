@@ -111,10 +111,10 @@ export default class Kink extends Vue {
     content: '';
     position: absolute;
     z-index: -1;
-    background-color: rgba(0, 0, 0, .1);
+    background-color: --gen-pair(rgba(0, 0, 0, .1));
     inset: -.1em -.75em -.3em;
-    border-top: solid rgba(0, 0, 0, .1) 1px;
-    border-bottom: solid rgba(0, 0, 0, .1) 1px;
+    border-top: solid --gen-pair(rgba(0, 0, 0, .1)) 1px;
+    border-bottom: solid --gen-pair(rgba(0, 0, 0, .1)) 1px;
     pointer-events: none;
   }
 }
@@ -176,7 +176,7 @@ input[type="radio"] {
   }
 
   &::after {
-    border: solid rgba(0, 0, 0, 0.5) 1px;
+    border: solid --gen-pair(rgba(0, 0, 0, 0.5)) 1px;
   }
 
   &:hover {
@@ -184,7 +184,7 @@ input[type="radio"] {
       opacity: 0.7;
     }
     &::after {
-      border: solid #000 2px;
+      border: solid --gen-pair(#121212) 2px;
     }
   }
 }
@@ -195,7 +195,7 @@ input[type="radio"] {
   }
 
   &::after {
-    border: solid #000 2px;
+    border: solid --gen-pair(#121212) 2px;
   }
 }
 
@@ -217,13 +217,13 @@ input[type="radio"] {
   }
 
   .edit-icon {
-    color: #FFF;
-    background-color: #36C;
+    color: --gen-pair(#DFE0E2);
+    background-color: --gen-pair(#36C);
     border-radius: 25%;
   }
   .remove-icon {
-    color: #FFF;
-    background-color: #F66;
+    color: --gen-pair(#DFE0E2);
+    background-color: --gen-pair(#F66);
     border-radius: 25%;
   }
 }
@@ -262,44 +262,44 @@ input[type="radio"] {
       &::before {
         content: '';
         position: absolute;
-        background-color: #FFF;
+        background-color: --gen-pair(#DFE0E2);
         width: 29px;
         height: 19px;
         border-radius: 100%;
         left: 3px;
         top: 6px;
-        border: solid #000 1px;
+        border: solid --gen-pair(#121212) 1px;
       }
 
       &::after {
         content: '';
         position: absolute;
-        background-color: #FFF;
+        background-color: --gen-pair(#DFE0E2);
         width: 7px;
         height: 10px;
         top: 16px;
         left: 6px;
         transform: skewY(-45deg);
-        border-left: solid #000 1.5px;
-        border-bottom: solid #000 1.5px;
+        border-left: solid --gen-pair(#121212) 1.5px;
+        border-bottom: solid --gen-pair(#121212) 1.5px;
       }
 
       &:hover {
         border-radius: 6px;
-        background-color: #BBB;
+        background-color: --gen-pair(#BBB);
       }
 
       &.has-comment {
         &::before {
-          background-color: #FC6;
+          background-color: --gen-pair(#FC6);
         }
         &::after {
-          background-color: #FC6;
+          background-color: --gen-pair(#FC6);
         }
       }
       &.has-comment span {
         position: absolute;
-        background-color: #630;
+        background-color: --gen-pair(#630);
         width: 35%;
         height: 1px;
         left: 30%;
@@ -308,7 +308,7 @@ input[type="radio"] {
         &::before {
           content: '';
           position: absolute;
-          background-color: #630;
+          background-color: --gen-pair(#630);
           width: 100%;
           height: 100%;
           top: 4px;

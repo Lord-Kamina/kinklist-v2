@@ -165,21 +165,21 @@ input {
 
 .dialog-action {
   padding: .35em .7em;
-  background-color: #FFF;
-  border: solid rgba(0, 0, 0, .2) 1px;
+  background-color: --gen-pair(#DFE0E2);
+  border: solid --gen-pair(rgba(0, 0, 0, .2)) 1px;
   font-size: 16px;
 
   &:hover {
-    border: solid rgba(0, 0, 0, .4) 1px;
+    border: solid --gen-pair(rgba(0, 0, 0, .4)) 1px;
   }
 
   &.action-primary {
-    background-color: #246;
-    color: #FFF;
+    background-color: --gen-pair(#246);
+    color: --gen-pair(#DFE0E2);
     font-weight: bold;
 
     &:hover {
-      background-color: #369;
+      background-color: --gen-pair(#369);
     }
   }
 }

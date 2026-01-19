@@ -3,13 +3,13 @@ import { InKinkCategory } from '../types/kinks';
 import { Rating } from '../types/ratings';
 
 export const getDefaultRatings = (): Rating[] => [
-    { name: 'Not Entered', color: '#FFF' },
-    { name: 'Want to try', color: '#C7C7C7' },
-    { name: 'I Love it', color: '#6DB5FE' },
-    { name: 'I Like it', color: '#23FD22' },
-    { name: 'It\'s okay', color: '#FDFD6B' },
-    { name: 'Maybe (Soft Limit)', color: '#F57900' },
-    { name: 'No (Hard Limit)', color: '#910000' },
+    { name: 'Not Entered', color: '--gen-pair(#DFE0E2)' },
+    { name: 'Want to try', color: '--gen-pair(#AEAFB0)' },
+    { name: 'I Love it', color: '--semantic-pair(#6DB5FE)' },
+    { name: 'I Like it', color: '--semantic-pair(#23FD22)' },
+    { name: 'It\'s okay', color: '--semantic-pair(#FDFD6B)' },
+    { name: 'Maybe (Soft Limit)', color: '--semantic-pair(#F57900)' },
+    { name: 'No (Hard Limit)', color: '--semantic-pair(#910000)' },
 ];
 
 const createKinkCategory = (name: string, subcategories: string[], kinks: string[], defaultRating: string): InKinkCategory => ({

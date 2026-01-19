@@ -107,7 +107,7 @@ export default class UploadResultDialog extends Vue {
   }
 
   .clipboard {
-    --btnbg: #DDD;
+    --btnbg: --gen-pair(#DDD);
     position: relative;
     width: 28px;
     height: 28px;
@@ -119,7 +119,7 @@ export default class UploadResultDialog extends Vue {
     border: 0;
 
     &:hover {
-      --btnbg: #BBB;
+      --btnbg: --gen-pair(#BBB);
     }
 
     &::before,
@@ -128,7 +128,7 @@ export default class UploadResultDialog extends Vue {
       position: absolute;
       width: 40%;
       height: 60%;
-      border: solid #333 1px;
+      border: solid --gen-pair(#333) 1px;
       outline: solid var(--btnbg) 1px;
       background-color: var(--btnbg);
     }
@@ -147,11 +147,11 @@ export default class UploadResultDialog extends Vue {
     text-decoration: none;
     width: 28px;
     height: 28px;
-    background-color: var(--btnbg);
+    background-color: --gen-pair(var(--btnbg));
     position: relative;
 
     &:hover {
-      --btnbg: #BBB;
+      --btnbg: --gen-pair(#BBB);
     }
 
     &::before {
@@ -161,7 +161,7 @@ export default class UploadResultDialog extends Vue {
       bottom: 5px;
       width: 14px;
       height: 14px;
-      border: solid #333 1px;
+      border: solid --gen-pair(#333) 1px;
     }
 
     &::after {
@@ -171,7 +171,7 @@ export default class UploadResultDialog extends Vue {
       top: 5px;
       width: 14px;
       height: 14px;
-      border: solid #333 1px;
+      border: solid --gen-pair(#333) 1px;
       border-width: 1px 1px 0 0;
       background: linear-gradient(
         -45deg,
@@ -179,8 +179,8 @@ export default class UploadResultDialog extends Vue {
         transparent 30%,
         var(--btnbg) 30%,
         var(--btnbg) 48%,
-        #333 48%,
-        #333 52%,
+        --gen-pair(#333) 48%,
+        --gen-pair(#333) 52%,
         var(--btnbg) 52%,
         var(--btnbg) 70%,
         transparent 70%,
@@ -191,8 +191,8 @@ export default class UploadResultDialog extends Vue {
 
 .toast {
   position: absolute;
-  background-color: #222;
-  color: #FFF;
+  background-color: --gen-pair(#222);
+  color: --gen-pair(#DFE0E2);
   padding: 1em 2em;
   border-radius: 7px;
   bottom: -75px;

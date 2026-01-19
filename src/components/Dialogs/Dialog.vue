@@ -67,7 +67,7 @@ export default class Dialog extends Vue {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #000;
+  background-color: --gen-pair(#121212);
   opacity: .7;
 }
 
@@ -76,7 +76,7 @@ export default class Dialog extends Vue {
   max-height: calc(100vh - 60px);
   min-width: 260px;
   max-width: 800px;
-  background-color: #eee;
+  background-color: --gen-pair(#eee);
 }
 
 .dialog-title {
@@ -96,7 +96,7 @@ export default class Dialog extends Vue {
     position: relative;
     width: 28px;
     height: 28px;
-    background-color: #E66;
+    background-color: --gen-pair(#E66);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,7 +113,7 @@ export default class Dialog extends Vue {
       position: absolute;
       height: 3px;
       width: calc(100% - 7px);
-      background-color: #EEE;
+      background-color: --gen-pair(#EEE);
       transform: rotate(45deg);
     }
 

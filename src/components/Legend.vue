@@ -41,7 +41,7 @@ export default class Legend extends Vue {
   display: flex;
   align-items: center;
   min-height: 37px;
-  background-color: rgba(0, 0, 0, .1);
+  background-color: --gen-pair(rgba(0, 0, 0, .1));
   border-radius: 4px;
   padding: 0 .5em 0 .5em;
   gap: .5em;
@@ -64,8 +64,8 @@ dd {
   display: flex;
   gap: .3em;
   isolation: isolate;
-  background-color: #FFF;
-  border: solid rgba(0, 0, 0, .35) 1px;
+  background-color: --gen-pair(#DFE0E2);
+  border: solid --gen-pair(rgba(0, 0, 0, .35)) 1px;
   border-radius: 100vw;
   padding: .2em .5em .2em .3em;
 }
@@ -75,19 +75,19 @@ dd {
   width: 20px;
   height: 20px;
   background-color: var(--color);
-  border: solid rgba(0, 0, 0, .75) 1px;
+  border: solid --gen-pair(rgba(0, 0, 0, .75)) 1px;
   border-radius: 50%;
 }
 
 .edit-legend {
-  color: #FFF;
+  color: --gen-pair(#DFE0E2);
   width: 31px;
   height: 31px;
   border-radius: 3px;
-  background-color: rgba(0, 0, 0, .4);
+  background-color: --gen-pair(rgba(0, 0, 0, .4));
 
   &:hover {
-    background-color: #000;
+    background-color: --gen-pair(#121212);
   }
 }
 

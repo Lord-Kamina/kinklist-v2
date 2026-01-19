@@ -24,8 +24,8 @@ export default class ExportButton extends Vue {
 
 <style lang="scss" scoped>
 button {
-  background-color: #246;
-  color: #FFF;
+  background-color: --gen-pair(#246);
+  color: --gen-pair(#DFE0E2);
   font-weight: bold;
   font-size: .95cqw;
   padding: 0.125cqw;
@@ -57,7 +57,7 @@ rect {
   height: calc(100%);
   fill: transparent;
   stroke-width: 10px;
-  stroke: #FFF;
+  stroke: --gen-pair(#DFE0E2);
   stroke-dasharray: 30 150;
   stroke-linecap: round;
   animation: dashoffset 1.75s linear infinite, pulse .75s infinite;
